@@ -1,16 +1,11 @@
 function FindProxyForURL(url, host) {
-    // Проверка для домена duo.com и всех его поддоменов
-    if (dnsDomainIs(host, "pornhub.com") || shExpMatch(host, "*.pornhub.com")) {
-        
-        // Список серверов в порядке приоритета:
-        // 1. 138.201.245.91:8080
-        // 2. 159.223.242.164:3000
-        // 3. 128.140.9.250:3000
-        // Если все прокси недоступны, последним стоит DIRECT (прямое соединение)
-        return "PROXY 192.111.139.165:4145; PROXY 52.38.230.247:3128; PROXY 184.178.172.5:15303; DIRECT";
+    // Очищаем хост от лишних пробелов и приводим к нижнему регистру
+    var lhost = host.toLowerCase();
+    
+    // Проверка для duo.com
+    if (shExpMatch(lhost, "pornhub.com") || shExpMatch(lhost, "*.pornhub.com")) {
+        return "PROXY 138.201.245.91:8080; PROXY 159.223.242.164:3000; PROXY 128.140.9.250:3000; DIRECT";
     }
 
-    // Все остальные сайты открываются напрямую
     return "DIRECT";
 }
-
